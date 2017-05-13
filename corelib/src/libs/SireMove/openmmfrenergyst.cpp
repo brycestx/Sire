@@ -682,7 +682,7 @@ void OpenMMFrEnergyST::initialise()
 
         double eps2 = (field_dielectric - 1.0) / (2 * field_dielectric + 1.0);
         double kvalue = eps2 / (converted_cutoff_distance * converted_cutoff_distance * converted_cutoff_distance);
-        double cvalue = (1.0 / converted_cutoff_distance)*(3.0 * field_dielectric) / (2.0 * field_dielectric + 1.0);
+        double cvalue =  0.0//1.0 / converted_cutoff_distance)*(3.0 * field_dielectric) / (2.0 * field_dielectric + 1.0);
 
         if (coulomb_power > 0)
         {//This is necessary to avoid nan errors on the GPUs platform caused by the calculation of 0^0
@@ -1080,7 +1080,7 @@ void OpenMMFrEnergyST::initialise()
 
     for (int i = 0; i < nmols; ++i)
     {
-        
+
         const int nats_mol = ws.nAtoms(i);
 
         const double *m = ws.massArray(i);
@@ -1722,7 +1722,7 @@ void OpenMMFrEnergyST::initialise()
                               system_openmm->addConstraint(idx0, idx1, pert_eq_distance);
                               if (Debug)
                               {
-                                  qDebug() << "perturbed bond parameter changes but involving " 
+                                  qDebug() << "perturbed bond parameter changes but involving "
                                            << " light mass so constrained " << atom0.name().toString()
                                            << "- " << atom1.name().toString() << "\n";
                               }
@@ -1734,7 +1734,7 @@ void OpenMMFrEnergyST::initialise()
                                if (Debug)
                                {
                                    qDebug() << "perturbed bond flexible " << atom0.name().toString()
-                                            << "- " << atom1.name().toString() << "\n"; 
+                                            << "- " << atom1.name().toString() << "\n";
                                }
                           }
                         }
@@ -3371,7 +3371,7 @@ void OpenMMFrEnergyST::integrate(IntegratorWorkspace &workspace,
             exit(-1);
         }
         pot_energies.append(p_energy_lambda * OpenMM::KcalPerKJ);
-        
+
         if (perturbed_energies[0])
         {
             openmm_context->setParameter("SPOnOff", 1.0); //Solvent-Solvent and Protein Protein Non Bonded OFF
@@ -3412,7 +3412,7 @@ void OpenMMFrEnergyST::integrate(IntegratorWorkspace &workspace,
 
         //Let's calculate the gradients
         double m_forward, m_backward;
-        boost::tuples::tie(actual_gradient, m_forward, m_backward) = calculateGradient(incr_plus, 
+        boost::tuples::tie(actual_gradient, m_forward, m_backward) = calculateGradient(incr_plus,
                              incr_minus, p_energy_lambda, beta);
 
         if (alchemical_array.size()>1)
@@ -3624,8 +3624,8 @@ void OpenMMFrEnergyST::emptyContainers()
     reduced_perturbed_energies.clear();
 }
 
-void OpenMMFrEnergyST::updateBoxDimensions(OpenMM::State &state_openmm, 
-                                             QVector< Vector> &buffered_dimensions, 
+void OpenMMFrEnergyST::updateBoxDimensions(OpenMM::State &state_openmm,
+                                             QVector< Vector> &buffered_dimensions,
                                              bool Debug, AtomicVelocityWorkspace &ws)
 {
     OpenMM::Vec3 a;
