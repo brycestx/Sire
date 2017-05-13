@@ -682,7 +682,7 @@ void OpenMMFrEnergyST::initialise()
 
         double eps2 = (field_dielectric - 1.0) / (2 * field_dielectric + 1.0);
         double kvalue = eps2 / (converted_cutoff_distance * converted_cutoff_distance * converted_cutoff_distance);
-        double cvalue =  0.0//1.0 / converted_cutoff_distance)*(3.0 * field_dielectric) / (2.0 * field_dielectric + 1.0);
+        double cvalue =  0.0;//1.0 / converted_cutoff_distance)*(3.0 * field_dielectric) / (2.0 * field_dielectric + 1.0);
 
         if (coulomb_power > 0)
         {//This is necessary to avoid nan errors on the GPUs platform caused by the calculation of 0^0
